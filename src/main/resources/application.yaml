@@ -1,3 +1,6 @@
 spring:
   application:
     name: impacto-ext
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/impacto-ext
