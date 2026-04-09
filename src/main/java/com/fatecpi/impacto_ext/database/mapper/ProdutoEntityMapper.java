@@ -8,8 +8,8 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface ProdutoEntityMapper {
 
-    public static final ProdutoEntityMapper INSTANCE = Mappers.getMapper(ProdutoEntityMapper.class);
+    ProdutoEntityMapper INSTANCE = Mappers.getMapper(ProdutoEntityMapper.class);
 
-    Produto toProduto(ProdutoEntityMapper produtoEntity);
+    Produto toProduto(ProdutoEntity produtoEntity);
     ProdutoEntity toEntity(Produto produto);
 }
