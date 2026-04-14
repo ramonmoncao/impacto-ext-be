@@ -9,10 +9,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ProdutoRequest {
-
+public class UserRequest {
     private String name;
-    private double price;
-    private String description;
-    private int estoque;
+    private String cpf;
+    private String email;
+    private String password;
 }
+
