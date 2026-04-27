@@ -40,4 +40,20 @@ public class OrcamentoController {
         List<Orcamento> lista = repository.findAll();
         return ResponseEntity.ok(lista);
     }
+    // Injete o serviço logo abaixo do repository
+    @Autowired
+    private com.fatecpi.impacto_ext.services.PdfService pdfService;
+
+    // Nova Rota para baixar o PDF
+    @GetMapping("/{id}/pdf")
+    public ResponseEntity<byte[]> baixarPdf(@PathVariable String id) {
+        Orcamento orcamento = repository.findById(id).orElseThrow();
+        byte[] pdf = pdfService.gerarPdfOrcamento(orcamento);
+
+        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+        headers.setContentType(org.springframework.http.MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("filename", "Orcamento_" + orcamento.getNomeCliente() + ".pdf");
+
+        return ResponseEntity.ok().headers(headers).body(pdf);
+    }
 }
