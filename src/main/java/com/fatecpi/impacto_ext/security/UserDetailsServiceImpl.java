@@ -16,8 +16,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        System.out.println("Tentando buscar usuário com e-mail: " + email);
         UserEntity user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+        System.out.println("Usuário encontrado! Senha (hash) no banco: " + user.getPassword());
         return User.builder()
                 .username(user.getEmail())
                 .password(user.getPassword())

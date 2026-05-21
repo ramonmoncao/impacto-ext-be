@@ -23,9 +23,9 @@ public class LoginUserUseCase implements LoginUserBoundary {
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public String execute(String email, String password) {
+    public String execute(String email, String senha) {
         UserEntityMapper mapper = UserEntityMapper.INSTANCE;
-        Authentication authentication = new UsernamePasswordAuthenticationToken(email, password);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(email, senha);
         try {
             authenticationManager.authenticate(authentication);
         } catch (AuthenticationException e) {

@@ -32,8 +32,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String email, @RequestParam String password) {
-        String jwt = loginUserBoundary.execute(email, password);
+    public ResponseEntity<String> login(@RequestParam String email, @RequestParam String senha) {
+        String jwt = loginUserBoundary.execute(email, senha);
         return ResponseEntity.ok(jwt);
     }
 }

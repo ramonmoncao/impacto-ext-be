@@ -23,7 +23,7 @@ public class CreateUserUseCase implements CreateUserBoundary {
         if (userRepository.findByCpf(user.getCpf()).isPresent()) {
             throw new RuntimeException("Já existe um usuário com este CPF");
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setSenha(passwordEncoder.encode(user.getSenha()));
         UserEntity entity = mapper.toEntity(user);
         entity.setId(UUID.randomUUID());
         userRepository.save(entity);
