@@ -1,6 +1,8 @@
 package com.fatecpi.impacto_ext.repositories;
 
 import com.fatecpi.impacto_ext.models.Usuario;
+
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

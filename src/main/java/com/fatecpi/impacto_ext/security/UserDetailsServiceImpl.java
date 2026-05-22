@@ -1,30 +1,26 @@
 package com.fatecpi.impacto_ext.security;
 
-import com.fatecpi.impacto_ext.database.entity.UserEntity;
-import com.fatecpi.impacto_ext.database.repository.UserRepository;
+import com.fatecpi.impacto_ext.repositories.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final UserRepository userRepository;
+
+    private final UsuarioRepository usuarioRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println("Tentando buscar usuário com e-mail: " + email);
-        UserEntity user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
-        System.out.println("Usuário encontrado! Senha (hash) no banco: " + user.getPassword());
-        return User.builder()
-                .username(user.getEmail())
-                .password(user.getPassword())
-                .roles("USER")
-                .build();
+        var usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + email));
+        
+        System.out.println("🔓 Hash carregado do banco: [" + usuario.getSenha() + "]");
+        System.out.println("🔓 Comprimento: " + usuario.getSenha().length());
+        
+        return usuario;
     }
 }
-
