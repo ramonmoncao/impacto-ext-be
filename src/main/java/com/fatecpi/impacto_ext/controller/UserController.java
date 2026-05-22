@@ -6,6 +6,8 @@ import com.fatecpi.impacto_ext.controller.response.UserResponse;
 import com.fatecpi.impacto_ext.core.model.User;
 import com.fatecpi.impacto_ext.core.usecase.boundary.CreateUserBoundary;
 import com.fatecpi.impacto_ext.core.usecase.boundary.LoginUserBoundary;
+import com.fatecpi.impacto_ext.models.LoginRequest;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +34,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String email, @RequestParam String senha) {
-        String jwt = loginUserBoundary.execute(email, senha);
+    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
+        String jwt = loginUserBoundary.execute(request.getEmail(), request.getSenha());
         return ResponseEntity.ok(jwt);
     }
 }
