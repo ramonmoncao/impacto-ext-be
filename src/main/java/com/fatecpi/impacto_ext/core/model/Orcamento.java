@@ -25,6 +25,7 @@ public class Orcamento {
     private List<OrcamentoItem> produtos;
     private double total;
     private Double desconto;
+    private String usuarioResponsavel;
 
     public void calcularTotal() {
 
