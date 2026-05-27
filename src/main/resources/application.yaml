@@ -3,4 +3,5 @@ spring:
     name: impacto-ext
   data:
     mongodb:
-      uri: mongodb://localhost:27017/test
+      uri: mongodb+srv://adminUser:${DB_PASSWORD}@impacto-ext.wcrz7wj.mongodb.net/IMPACTO-EXT?appName=IMPACTO-EXT
+      uuid-representation: standard

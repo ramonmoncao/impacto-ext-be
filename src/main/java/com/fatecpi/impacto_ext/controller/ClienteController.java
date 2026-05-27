@@ -30,4 +30,13 @@ public class ClienteController {
         List<ClienteEntity> clientes = clienteRepository.findAll();
         return ResponseEntity.ok(clientes);
     }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<List<ClienteEntity>> buscarCliente(@RequestParam String termo) {
+        // Passa o termo tanto para a busca de nome quanto de CNPJ
+        List<ClienteEntity> resultados = clienteRepository.findByNomeContainingIgnoreCaseOrCnpjContaining(termo, termo);
+        
+        // Retorna a lista (pode estar vazia, não tem problema)
+        return ResponseEntity.ok(resultados);
+    }
 }
