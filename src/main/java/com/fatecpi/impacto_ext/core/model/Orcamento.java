@@ -45,5 +45,16 @@ public class Orcamento {
 
         this.total = val;
     }
+
+private boolean concluido = false;
+
+// Adicione os getters e setters se não estiver usando o Lombok (@Data)
+public boolean isConcluido() {
+    return concluido;
+}
+
+public void setConcluido(boolean concluido) {
+    this.concluido = concluido;
+}
 }
 

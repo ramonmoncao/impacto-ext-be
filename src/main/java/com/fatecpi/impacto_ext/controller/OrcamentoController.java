@@ -56,4 +56,57 @@ public class OrcamentoController {
 
         return ResponseEntity.ok().headers(headers).body(pdf);
     }
+
+    @PatchMapping("/{id}/status-conclusao")
+    
+        public ResponseEntity<Orcamento> atualizarStatusConclusao(
+            @PathVariable String id, 
+            @RequestBody java.util.Map<String, Boolean> payload) {
+    
+            Orcamento orcamento = repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Orçamento não encontrado"));
+    
+            boolean concluido = payload.get("concluido");
+            orcamento.setConcluido(concluido);
+    
+            Orcamento atualizado = repository.save(orcamento);
+            return ResponseEntity.ok(atualizado);
+}
+
+        @DeleteMapping("/{id}")
+            public ResponseEntity<Void> excluirOrcamento(@PathVariable String id) {
+            // Verifica se o registro realmente existe antes de tentar apagar
+            if (!repository.existsById(id)) {
+        return ResponseEntity.notFound().build();
+            }
+    
+            repository.deleteById(id);
+            return ResponseEntity.noContent().build(); // Retorna o status HTTP 244 (Sem Conteúdo), padrão de exclusão com sucesso
+}
+
+    @PutMapping("/{id}")
+        public ResponseEntity<Orcamento> atualizarOrcamentoCompleto(@PathVariable String id, @RequestBody Orcamento novosDados) {
+    Orcamento orcamentoDoBanco = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Orçamento não encontrado"));
+            
+    // Atualiza os dados comerciais e operacionais vindos do front
+    orcamentoDoBanco.setNomeCliente(novosDados.getNomeCliente());
+    orcamentoDoBanco.setEndereco(novosDados.getEndereco());
+    orcamentoDoBanco.setTelefone(novosDados.getTelefone());
+    orcamentoDoBanco.setObservacoes(novosDados.getObservacoes());
+    orcamentoDoBanco.setValorTotal(novosDados.getValorTotal());
+    orcamentoDoBanco.setItens(novosDados.getItens());
+    
+    // Mantém a data de emissão original, mas atualiza os dados
+    Orcamento atualizado = repository.save(orcamentoDoBanco);
+    return ResponseEntity.ok(atualizado);
+}
+
+    @GetMapping("/{id}")
+        public ResponseEntity<Orcamento> buscarPorId(@PathVariable String id) {
+    Orcamento orcamento = repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Orçamento não encontrado"));
+    return ResponseEntity.ok(orcamento);
+}
+
 }
