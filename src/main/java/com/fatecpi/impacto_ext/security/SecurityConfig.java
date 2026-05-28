@@ -34,7 +34,7 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers("/users/register", "/users/login", "/api/auth/login").permitAll()
+                .requestMatchers("/users/register", "/users/login", "/api/auth/login", "/api/orcamentos/*/pdf").permitAll()
                 .requestMatchers("/clientes/**").authenticated()
                 .anyRequest().authenticated())
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
