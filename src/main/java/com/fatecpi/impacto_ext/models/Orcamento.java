@@ -23,15 +23,8 @@ public class Orcamento {
     private Double valorTotal;
     private String observacoes;
     private LocalDateTime dataEmissao;
-
-    private boolean concluido; // Adicione esta linha
-
-    public boolean isConcluido() {
-        return concluido;
-    }
-
-    public void setConcluido(boolean concluido) {
-        this.concluido = concluido;
-    }
-
+    
+    private String usuarioResponsavel; // Registra o Vendedor
+    private boolean concluido; 
+    private LocalDateTime dataConclusao; // Controla a auditoria para tabela de vencimentos
 }

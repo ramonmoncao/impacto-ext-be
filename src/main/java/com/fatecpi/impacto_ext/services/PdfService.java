@@ -28,11 +28,16 @@ public class PdfService {
             document.add(titulo);
             document.add(new Paragraph(" \n")); // Espaço
 
-            // Dados do Cliente
+            // Dados do Cliente e do Vendedor
             document.add(new Paragraph("CLIENTE: " + orcamento.getNomeCliente()));
-            document.add(new Paragraph("CNPJ: " + orcamento.getCnpj()));
-            document.add(new Paragraph("ENDEREÇO: " + orcamento.getEndereco()));
-            document.add(new Paragraph("TELEFONE: " + orcamento.getTelefone()));
+            document.add(new Paragraph("CNPJ: " + (orcamento.getCnpj() != null ? orcamento.getCnpj() : "Não informado")));
+            document.add(new Paragraph("ENDEREÇO: " + (orcamento.getEndereco() != null ? orcamento.getEndereco() : "Não informado")));
+            document.add(new Paragraph("TELEFONE: " + (orcamento.getTelefone() != null ? orcamento.getTelefone() : "Não informado")));
+            
+            // ADICIONADO: Exibe o nome do vendedor responsável no corpo do PDF
+            String vendedor = orcamento.getUsuarioResponsavel() != null ? orcamento.getUsuarioResponsavel() : "Não identificado";
+            document.add(new Paragraph("VENDEDOR RESPONSÁVEL: " + vendedor));
+            
             document.add(new Paragraph(" \n")); // Espaço
 
             // Tabela de Itens (O Carrinho)
@@ -43,11 +48,13 @@ public class PdfService {
             table.addCell(new PdfPCell(new Phrase("UNITÁRIO", FontFactory.getFont(FontFactory.HELVETICA_BOLD))));
             table.addCell(new PdfPCell(new Phrase("TOTAL", FontFactory.getFont(FontFactory.HELVETICA_BOLD))));
 
-            for (ItemOrcamento item : orcamento.getItens()) {
-                table.addCell(item.getDescricaoProduto());
-                table.addCell(String.valueOf(item.getQuantidade()));
-                table.addCell(String.format("R$ %.2f", item.getValorUnitario()));
-                table.addCell(String.format("R$ %.2f", item.getSubtotal()));
+            if (orcamento.getItens() != null) {
+                for (ItemOrcamento item : orcamento.getItens()) {
+                    table.addCell(item.getDescricaoProduto() != null ? item.getDescricaoProduto() : "---");
+                    table.addCell(String.valueOf(item.getQuantidade()));
+                    table.addCell(String.format("R$ %.2f", item.getValorUnitario()));
+                    table.addCell(String.format("R$ %.2f", item.getSubtotal()));
+                }
             }
             document.add(table);
             document.add(new Paragraph(" \n"));
