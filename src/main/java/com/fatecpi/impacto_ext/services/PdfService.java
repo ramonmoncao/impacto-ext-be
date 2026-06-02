@@ -83,10 +83,10 @@ public class PdfService {
             adicionarCelulaCliente(tableCliente, "DATA: " + dataAtual, fontNormal);
             
             adicionarCelulaCliente(tableCliente, "ENDEREÇO: " + orcamento.getEndereco(), fontNormal);
-            adicionarCelulaCliente(tableCliente, "Nº: ", fontNormal); // Se tiver número separado no modelo
+            adicionarCelulaCliente(tableCliente, "Nº: " + orcamento.getNumero(), fontNormal); // Se tiver número separado no modelo
 
-            adicionarCelulaCliente(tableCliente, "BAIRRO: ", fontNormal); // Preencher se houver no DB
-            adicionarCelulaCliente(tableCliente, "CIDADE: ", fontNormal);
+            adicionarCelulaCliente(tableCliente, "BAIRRO: " + orcamento.getBairro(), fontNormal); // Preencher se houver no DB
+            adicionarCelulaCliente(tableCliente, "CIDADE: " + orcamento.getCidade(), fontNormal);
 
             adicionarCelulaCliente(tableCliente, "CNPJ: " + orcamento.getCnpj(), fontNormal);
             adicionarCelulaCliente(tableCliente, "TELEFONE: " + orcamento.getTelefone(), fontNormal);
@@ -137,7 +137,9 @@ public class PdfService {
             // ==========================================
             // 4. RODAPÉ E ASSINATURAS
             // ==========================================
-            document.add(new Paragraph("\nOBS: VALOR DA RECARGA DOS EXTINTORES FECHADO, NÃO HAVERÁ NENHUM ACRÉSCIMO NAS TROCAS DE PEÇAS\n\n", fontPequena));           
+            Paragraph paragrafoObs = new Paragraph("\nOBS: VALOR DA RECARGA DOS EXTINTORES FECHADO, NÃO HAVERÁ NENHUM ACRÉSCIMO NAS TROCAS DE PEÇAS\n\n", fontPequena);
+            paragrafoObs.setAlignment(Element.ALIGN_CENTER);
+            document.add(paragrafoObs);          
 
             // Condição de pagamento digitada no app
             String obsPagamento = (orcamento.getObservacoes() != null && !orcamento.getObservacoes().isEmpty()) 

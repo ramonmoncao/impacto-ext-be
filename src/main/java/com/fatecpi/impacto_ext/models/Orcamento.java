@@ -17,6 +17,9 @@ public class Orcamento {
     private String cnpj;
     private String endereco;
     private String telefone;
+    private String numero;
+    private String bairro;
+    private String cidade;
     
     private List<ItemOrcamento> itens;
     

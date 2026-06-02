@@ -17,4 +17,7 @@ public class Cliente {
     private String name;
     private String cnpj;
     private String cpf;
+    private String numero;
+    private String bairro;
+    private String cidade;
 }
