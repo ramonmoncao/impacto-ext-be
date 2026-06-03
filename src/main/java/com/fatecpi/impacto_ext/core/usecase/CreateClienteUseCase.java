@@ -15,10 +15,10 @@ public class CreateClienteUseCase {
         this.createClienteBoundary = createClienteBoundary;
     }
 
-    public UUID execute(Cliente cliente) {
+    public String execute(Cliente cliente) {
         // Gera um ID caso o cliente seja novo
         if (cliente.getId() == null) {
-            cliente.setId(UUID.randomUUID());
+            cliente.setId(UUID.randomUUID().toString());
         }
         return createClienteBoundary.execute(cliente);
     }

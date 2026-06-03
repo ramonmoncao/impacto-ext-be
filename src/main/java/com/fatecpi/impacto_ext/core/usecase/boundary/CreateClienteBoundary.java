@@ -4,5 +4,5 @@ import com.fatecpi.impacto_ext.core.model.Cliente;
 import java.util.UUID;
 
 public interface CreateClienteBoundary {
-    UUID execute(Cliente cliente);
+    String execute(Cliente cliente);
 }

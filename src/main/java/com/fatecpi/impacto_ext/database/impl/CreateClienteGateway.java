@@ -17,7 +17,7 @@ public class CreateClienteGateway implements CreateClienteBoundary {
     private final ClienteRepository repository;
 
     @Override
-    public UUID execute(Cliente cliente) {
+    public String execute(Cliente cliente) {
         ClienteEntityMapper mapper = ClienteEntityMapper.INSTANCE;
         ClienteEntity entity = mapper.toEntity(cliente);
         

@@ -13,7 +13,7 @@ import java.util.UUID;
 @Getter
 public class Cliente {
 
-    private UUID id;
+    private String id;
     private String name;
     private String cnpj;
     private String cpf;
