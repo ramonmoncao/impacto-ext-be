@@ -17,10 +17,17 @@ public class Orcamento {
     private String cnpj;
     private String endereco;
     private String telefone;
+    private String numero;
+    private String bairro;
+    private String cidade;
     
     private List<ItemOrcamento> itens;
     
     private Double valorTotal;
     private String observacoes;
     private LocalDateTime dataEmissao;
+    
+    private String usuarioResponsavel; // Registra o Vendedor
+    private boolean concluido; 
+    private LocalDateTime dataConclusao; // Controla a auditoria para tabela de vencimentos
 }

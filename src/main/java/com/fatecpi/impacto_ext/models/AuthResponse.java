@@ -5,9 +5,11 @@ import lombok.Data;
 @Data
 public class AuthResponse {
     private String token;
+    private String nome; // <-- NOVO CAMPO
     
-    // Construtor para facilitar na hora de devolver a resposta
-    public AuthResponse(String token) {
+    // Construtor atualizado para receber o nome
+    public AuthResponse(String token, String nome) {
         this.token = token;
+        this.nome = nome;
     }
 }

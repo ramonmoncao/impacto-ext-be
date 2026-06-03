@@ -25,24 +25,29 @@ public class Orcamento {
     private List<OrcamentoItem> produtos;
     private double total;
     private Double desconto;
+    
+    private String usuarioResponsavel;
+    private boolean concluido;
+    private LocalDateTime dataConclusao;
 
     public void calcularTotal() {
-
         double val = 0;
-
-        for (OrcamentoItem item : produtos) {
-            item.calcularSubtotal();
-            val += item.getSubtotal();
+        
+        // CORREÇÃO 1: Evitando loop nulo
+        if (produtos != null) {
+            for (OrcamentoItem item : produtos) {
+                item.calcularSubtotal();
+                val += item.getSubtotal();
+            }
         }
-
+        
         if (desconto != null) {
+            // CORREÇÃO 2: Variável 'desconto' arrumada
             if (desconto < 0 || desconto > 100) {
-                throw new IllegalArgumentException("Invalid discount number");
+                throw new IllegalArgumentException("Número de desconto inválido.");
             }
             val -= val * desconto / 100;
         }
-
         this.total = val;
     }
 }
-

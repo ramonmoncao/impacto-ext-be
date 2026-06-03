@@ -2,9 +2,8 @@ package com.fatecpi.impacto_ext.core.usecase;
 
 import com.fatecpi.impacto_ext.core.model.User;
 import com.fatecpi.impacto_ext.core.usecase.boundary.CreateUserBoundary;
-import com.fatecpi.impacto_ext.database.entity.UserEntity;
-import com.fatecpi.impacto_ext.database.mapper.UserEntityMapper;
-import com.fatecpi.impacto_ext.database.repository.UserRepository;
+import com.fatecpi.impacto_ext.models.Usuario;
+import com.fatecpi.impacto_ext.repositories.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,20 +12,26 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class CreateUserUseCase implements CreateUserBoundary {
-    private final UserRepository userRepository;
+    
+    private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public UUID execute(User user) {
-        UserEntityMapper mapper = UserEntityMapper.INSTANCE;
-        // Verifica se já existe usuário com o mesmo CPF
-        if (userRepository.findByCpf(user.getCpf()).isPresent()) {
-            throw new RuntimeException("Já existe um usuário com este CPF");
-        }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        UserEntity entity = mapper.toEntity(user);
-        entity.setId(UUID.randomUUID());
-        userRepository.save(entity);
-        return entity.getId();
+        // Cria uma nova instância de Usuario
+        Usuario usuario = new Usuario();
+        String id = UUID.randomUUID().toString();
+        usuario.setId(id);
+        usuario.setNome(user.getName());
+        usuario.setEmail(user.getEmail());
+        
+        // Criptografa a senha antes de salvar
+        usuario.setSenha(passwordEncoder.encode(user.getSenha()));
+        
+        // Salva no repositório
+        usuarioRepository.save(usuario);
+        
+        // Retorna UUID como esperado pela interface
+        return UUID.fromString(id);
     }
 }

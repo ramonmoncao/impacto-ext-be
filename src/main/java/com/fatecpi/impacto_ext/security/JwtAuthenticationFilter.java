@@ -26,29 +26,44 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
+        
+        System.out.println("====== NOVA REQUISIÇÃO ======");
+        System.out.println("Rota: " + request.getRequestURI());
+        
         final String authHeader = request.getHeader("Authorization");
+        System.out.println("Header Authorization: " + authHeader);
+        
         final String jwt;
         final String userEmail;
+        
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            System.out.println("-> Requisição sem Token JWT válido. Passando adiante...");
             filterChain.doFilter(request, response);
             return;
         }
+        
         jwt = authHeader.substring(7);
-        userEmail = jwtService.getEmailFromToken(jwt);
-        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            try {
+        try {
+            userEmail = jwtService.getEmailFromToken(jwt);
+            System.out.println("-> Email extraído do token: " + userEmail);
+            
+            if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+                
                 if (userDetails != null) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities());
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
+                    System.out.println("-> Usuário autenticado com sucesso no filtro!");
                 }
-            } catch (Exception e) {
-                // Invalid user or other issues, do not set authentication
             }
+        } catch (Exception e) {
+            System.out.println("-> ERRO AO VALIDAR O TOKEN OU USUÁRIO: " + e.getMessage());
+            e.printStackTrace(); // AGORA SIM VAMOS VER O ERRO DE VERDADE!
         }
+        
         filterChain.doFilter(request, response);
     }
 }

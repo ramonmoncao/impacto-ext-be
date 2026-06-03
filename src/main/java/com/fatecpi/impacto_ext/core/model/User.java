@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 public class User extends Vendedor{
 
         private String email;
-        private String password;
+        private String senha;
 
-        public User(String name, String cpf, String email, String password) {
+        public User(String name, String cpf, String email, String senha) {
             super(name, cpf);
             this.email = email;
-            this.password = password;
+            this.senha = senha;
         }
 
 }

@@ -13,6 +13,6 @@ public class UserRequest {
     private String name;
     private String cpf;
     private String email;
-    private String password;
+    private String senha;
 }
 

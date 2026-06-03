@@ -1,11 +1,13 @@
 package com.fatecpi.impacto_ext.database.repository;
 
 import com.fatecpi.impacto_ext.database.entity.ClienteEntity;
+
+import java.util.List;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
-
 @Repository
-public interface ClienteRepository extends MongoRepository<ClienteEntity, UUID> {
+public interface ClienteRepository extends MongoRepository<ClienteEntity, String> {
+  List<ClienteEntity> findByNomeContainingIgnoreCaseOrCnpjContaining(String nome, String cnpj);
 }

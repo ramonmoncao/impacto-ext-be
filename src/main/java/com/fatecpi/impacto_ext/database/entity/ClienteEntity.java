@@ -7,19 +7,22 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.UUID;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "clientes")
 public class ClienteEntity {
+    
     @Id
-    private UUID id;
-    private String name;
+    private String id; // String é o padrão ideal para o _id automático do MongoDB
+    
+    private String nome; // Usando 'nome' para casar perfeitamente com o JSON do front-end
     private String cnpj;
     private String cpf;
     private String telefone;
     private String endereco;
+    private String numero;
+    private String bairro;
+    private String cidade;
 }

@@ -1,6 +1,12 @@
 spring:
   application:
     name: impacto-ext
+  # Formato alternativo (caso o starter use a especificação antiga)
+  mongodb:
+    uri: 'mongodb+srv://admin:235813@impacto-ext.wcrz7wj.mongodb.net/IMPACTO-EXT?retryWrites=true&w=majority'
+  # Formato padrão
   data:
     mongodb:
-      uri: mongodb://localhost:27017/impacto-ext
+      uri: 'mongodb+srv://admin:235813@impacto-ext.wcrz7wj.mongodb.net/IMPACTO-EXT?retryWrites=true&w=majority'
+      uuid-representation: standard
+      auto-index-creation: false
