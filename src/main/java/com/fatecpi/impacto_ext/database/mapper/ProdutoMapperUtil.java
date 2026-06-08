@@ -1,12 +1,16 @@
 package com.fatecpi.impacto_ext.database.mapper;
 
-import com.fatecpi.impacto_ext.core.model.Produto;
 import com.fatecpi.impacto_ext.core.model.Extintor;
+import com.fatecpi.impacto_ext.core.model.Produto;
 import com.fatecpi.impacto_ext.database.entity.ProdutoEntity;
 
 public class ProdutoMapperUtil {
+
     public static Produto toProdutoPolimorfico(ProdutoEntity entity) {
-        if (entity.getType() != null && entity.getWeight() != null && entity.getStatus() != null) {
+        if (entity == null) return null;
+
+        // Se o campo de enum do tipo de extintor estiver preenchido, mapeia como Extintor
+        if (entity.getType() != null) {
             Extintor extintor = new Extintor();
             extintor.setId(entity.getId());
             extintor.setName(entity.getName());
@@ -14,7 +18,6 @@ public class ProdutoMapperUtil {
             extintor.setDescription(entity.getDescription());
             extintor.setEstoque(entity.getEstoque());
             extintor.setType(entity.getType());
-            extintor.setWeight(entity.getWeight());
             extintor.setStatus(entity.getStatus());
             return extintor;
         } else {
@@ -28,4 +31,3 @@ public class ProdutoMapperUtil {
         }
     }
 }
-

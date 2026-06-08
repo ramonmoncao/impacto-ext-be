@@ -16,7 +16,7 @@ public class GetProdutoByIdUseCase implements GetProdutoByIdBoundary {
     private final ProdutoRepository produtoRepository;
 
     @Override
-    public Optional<Produto> execute(UUID id) {
+    public Optional<Produto> execute(String id) {
         return produtoRepository.findById(id)
                 .map(ProdutoMapperUtil::toProdutoPolimorfico);
     }

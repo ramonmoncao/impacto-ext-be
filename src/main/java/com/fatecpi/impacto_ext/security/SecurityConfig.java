@@ -36,6 +36,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/users/register", "/users/login", "/api/auth/login", "/api/orcamentos/*/pdf").permitAll()
                 .requestMatchers("/clientes/**").authenticated()
+                .requestMatchers("/products/**").authenticated()
                 .anyRequest().authenticated())
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

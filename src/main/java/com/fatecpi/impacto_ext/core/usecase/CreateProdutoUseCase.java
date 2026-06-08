@@ -13,7 +13,7 @@ public class CreateProdutoUseCase {
 
     private final CreateProdutoBoundary createProdutoBoundary;
 
-    public UUID execute(Produto produto) {
+    public String execute(Produto produto) {
         if (produto.getPrice() <= 0) {
             throw new IllegalArgumentException("Preço deve ser maior que zero");
         }

@@ -22,7 +22,7 @@ import java.util.UUID;
 public class ProdutoEntity{
 
     @Id
-    private UUID id;
+    private String id;
     private String name;
     private double price;
     private String description;

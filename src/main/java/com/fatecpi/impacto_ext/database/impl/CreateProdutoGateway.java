@@ -17,10 +17,10 @@ public class CreateProdutoGateway implements CreateProdutoBoundary {
     private final ProdutoRepository repository;
 
     @Override
-    public UUID execute(Produto produto) {
+    public String execute(Produto produto) {
         ProdutoEntityMapper mapper = ProdutoEntityMapper.INSTANCE;
         ProdutoEntity entity = mapper.toEntity(produto);
-        entity.setId(UUID.randomUUID());
+        entity.setId(UUID.randomUUID().toString());
         ProdutoEntity saved = repository.insert(entity);
         return saved.getId();
     }

@@ -14,9 +14,9 @@ public class CreateExtintorUseCase implements CreateExtintorBoundary {
     private final ProdutoRepository produtoRepository;
 
     @Override
-    public UUID execute(Extintor extintor) {
+    public String execute(Extintor extintor) {
         ProdutoEntity entity = ProdutoEntity.builder()
-                .id(UUID.randomUUID())
+                .id(UUID.randomUUID().toString())
                 .name(extintor.getName())
                 .price(extintor.getPrice())
                 .description(extintor.getDescription())

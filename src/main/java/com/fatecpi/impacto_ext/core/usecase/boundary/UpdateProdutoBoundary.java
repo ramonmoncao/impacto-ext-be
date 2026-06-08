@@ -2,9 +2,6 @@ package com.fatecpi.impacto_ext.core.usecase.boundary;
 
 import com.fatecpi.impacto_ext.core.model.Produto;
 
-import java.util.UUID;
-
-public interface CreateProdutoBoundary {
-
+public interface UpdateProdutoBoundary {
     String execute(Produto produto);
 }

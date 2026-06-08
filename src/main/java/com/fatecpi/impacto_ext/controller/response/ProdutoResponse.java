@@ -11,7 +11,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 public class ProdutoResponse {
-    private UUID id;
+    private String id;
     private String name;
     private double price;
     private String description;

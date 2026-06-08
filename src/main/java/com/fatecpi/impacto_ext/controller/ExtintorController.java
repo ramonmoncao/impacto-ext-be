@@ -22,10 +22,10 @@ public class ExtintorController {
     private final CreateExtintorBoundary createExtintorBoundary;
 
     @PostMapping
-    public ResponseEntity<UUID> create(@RequestBody ExtintorRequest request) {
+    public ResponseEntity<String> create(@RequestBody ExtintorRequest request) {
         ExtintorRequestMapper mapper = ExtintorRequestMapper.INSTANCE;
         Extintor extintor = mapper.toExtintor(request);
-        UUID id = createExtintorBoundary.execute(extintor);
+        String id = createExtintorBoundary.execute(extintor);
         return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
 }

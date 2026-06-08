@@ -9,6 +9,7 @@ import com.fatecpi.impacto_ext.core.model.Produto;
 import com.fatecpi.impacto_ext.core.usecase.CreateProdutoUseCase;
 import com.fatecpi.impacto_ext.core.usecase.boundary.GetProdutoByIdBoundary;
 import com.fatecpi.impacto_ext.core.usecase.boundary.GetProdutosBoundary;
+import com.fatecpi.impacto_ext.core.usecase.boundary.UpdateProdutoBoundary;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,13 +26,15 @@ public class ProdutoController {
     private final CreateProdutoUseCase createProdutoUseCase;
     private final GetProdutosBoundary getProdutosUseCase;
     private final GetProdutoByIdBoundary getProdutoByIdUseCase;
+    
+    // NOVA INJEÇÃO AQUI
+    private final UpdateProdutoBoundary updateProdutoUseCase;
 
     @PostMapping
-    public ResponseEntity<UUID> create(@RequestBody ProdutoRequest request) {
-
+    public ResponseEntity<String> create(@RequestBody ProdutoRequest request) {
         ProdutoRequestMapper mapper = ProdutoRequestMapper.INSTANCE;
         Produto produto = mapper.toProduto(request);
-        UUID id = createProdutoUseCase.execute(produto);
+        String id = createProdutoUseCase.execute(produto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
@@ -67,7 +69,7 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getById(@PathVariable UUID id) {
+    public ResponseEntity<Object> getById(@PathVariable String id) {
         Optional<Produto> produtoOpt = getProdutoByIdUseCase.execute(id);
         if (produtoOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -94,6 +96,23 @@ public class ProdutoController {
                     .estoque(produto.getEstoque())
                     .build();
             return ResponseEntity.ok(response);
+        }
+    }
+
+    // NOVA ROTA DE ATUALIZAÇÃO (PUT)
+    @PutMapping("/{id}")
+    public ResponseEntity<String> update(@PathVariable String id, @RequestBody ProdutoRequest request) {
+        ProdutoRequestMapper mapper = ProdutoRequestMapper.INSTANCE;
+        Produto produto = mapper.toProduto(request);
+        
+        // Garante que o ID da URL será usado na atualização
+        produto.setId(id);
+        
+        try {
+            String updatedId = updateProdutoUseCase.execute(produto);
+            return ResponseEntity.ok(updatedId);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 }

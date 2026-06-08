@@ -5,6 +5,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface GetProdutoByIdBoundary {
-    Optional<Produto> execute(UUID id);
+    Optional<Produto> execute(String id);
 }
 
