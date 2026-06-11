@@ -8,7 +8,8 @@ COPY .mvn .mvn
 COPY src ./src
 
 # Faz o build do pacote (skipTests para acelerar; retire se precisar rodar testes no build)
-RUN mvn -B -DskipTests clean package
+# Executa também o goal spring-boot:repackage para garantir que o JAR seja empacotado com o launcher
+RUN mvn -B -DskipTests clean package spring-boot:repackage && ls -la target
 
 # Runtime stage: usa uma imagem JRE leve
 FROM eclipse-temurin:17-jre-jammy
@@ -17,7 +18,8 @@ FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 
 # Copia o artefato gerado da stage de build
-COPY --from=build /workspace/target/*.jar app.jar
+## Copia explicitamente o JAR gerado (ajuste o nome se seu artifactId/version mudarem)
+COPY --from=build /workspace/target/impacto-ext-0.0.1-SNAPSHOT.jar app.jar
 
 # Cria usuário não-root e troca para esse usuário (melhora segurança)
 RUN addgroup --system appgroup \
