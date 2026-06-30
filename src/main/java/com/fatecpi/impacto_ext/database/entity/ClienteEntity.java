@@ -20,6 +20,7 @@ public class ClienteEntity {
     private String nome; // Usando 'nome' para casar perfeitamente com o JSON do front-end
     private String cnpj;
     private String cpf;
+    private String email;
     private String telefone;
     private String endereco;
     private String numero;
